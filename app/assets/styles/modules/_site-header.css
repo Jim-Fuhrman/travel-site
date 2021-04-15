@@ -1,0 +1,131 @@
+.site-header {
+    padding: 10px 0; 
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    transition: background-color .3s ease-out;
+
+    &--is-expanded {
+        background-color: rgba(47, 85, 114, .55);
+    }
+    
+    @mixin atMedium {
+        background-color: rgba(47, 85, 114, .3);
+    }
+
+    &__btn-container {
+        @mixin atMedium {
+            /* float: right; */
+            order: 2;
+        }
+    }
+
+    &__logo {
+        position: absolute;
+        top: 0;
+        left: 50%; /* this pushes the logo too far right on mobile screens. The next line, the transform is the solution to this problem. */
+        transform: translateX(-50%); /* this pulls the logo back over 50% of its own width. */
+        background-color: $mainBlue;
+        padding: 13px 29px;
+    
+        @mixin atMedium { /* we don't want the logo centered on larger screens just smaller ones. */
+            left: auto;
+            transform: translateX(0);
+            padding: 25px 36px;
+        }
+    }
+
+    &__logo__graphic {
+        text-indent: -9999px;
+    }
+
+    &__menu-icon {
+        width: 20px;
+        height: 19px;
+        position: absolute;
+        z-index: 10; /* we need this so the top right icon isn't overlaid when we click it the first time. Without this our icon won't make the nav menu vanish when it should vanish.*/
+        top: 10px;
+        right: 10px;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 3px;
+            background-color: #fff;
+            transform-origin: 0 0;
+            transition: transform .3s ease-out;
+        }
+
+        &__middle {
+            position: absolute;
+            top: 8px;
+            left: 0;
+            width: 20px;
+            height: 3px;
+            background-color: #fff;
+            transition: all .3s ease-out;
+            transform-origin: 0 50%;
+        }
+
+        &::after {
+            content: ""; /* Required or you won't see the last horizontal bar of the hamburger icon. */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 20px;
+            height: 3px;
+            background-color: #fff;
+            transform-origin: 0 100%;
+            transition: transform .3s ease-out;
+        }
+
+        @mixin atMedium {
+            display: none;
+        }
+    }
+
+    &__menu-icon--close-x {
+        &::before {
+            transform: rotate(45deg) scaleX(1.25);
+
+        }
+
+        .site-header__menu-icon__middle {
+            opacity: 0;
+            transform: scaleX(0)
+        }
+
+        &::after {
+            transform: rotate(-45deg) scaleX(1.25) translateY(1px);
+        }
+    }
+
+    &__menu-content {
+        opacity: 0;
+        transform: scale(1.2);
+        transition: all .3s ease-out;
+        position: relative; /* this is required when using the z-index. */
+        z-index: -10; /* this prevents our menu from being accidentally clicked on when it's invisible. */
+        padding-top: 80px;
+        text-align: center;
+
+        @mixin atMedium {
+            display: flex;
+            justify-content: flex-end;
+            opacity: 1;
+            z-index: 1;
+            padding-top: 0;
+            transform: scale(1);
+        }
+
+        &--is-visible {
+            opacity: 1;
+            z-index: 1;
+            /* remember we only want the content hidden initially for small screens. */
+            transform: scale(1);
+        }
+    }
+}
