@@ -10,7 +10,12 @@
     }
     
     @mixin atMedium {
+        position: fixed;
         background-color: rgba(47, 85, 114, .3);
+
+        &--dark {
+            background-color: rgba(23, 51, 72, .85);
+        }
     }
 
     &__btn-container {
@@ -24,14 +29,18 @@
         position: absolute;
         top: 0;
         left: 50%; /* this pushes the logo too far right on mobile screens. The next line, the transform is the solution to this problem. */
+        transition: transform .3s ease-out;
         transform: translateX(-50%); /* this pulls the logo back over 50% of its own width. */
         background-color: $mainBlue;
-        padding: 13px 29px;
+        padding: 13px 29px; 
     
         @mixin atMedium { /* we don't want the logo centered on larger screens just smaller ones. */
             left: auto;
             transform: translateX(0);
-            padding: 25px 36px;
+
+            .site-header--dark & {
+                transform: scale(.66) translateY(-20%); /* this line of code is different than the instructor's. The instructor doesn't use translateY at all, and he scales his .55 not .66 */
+            }
         }
     }
 
